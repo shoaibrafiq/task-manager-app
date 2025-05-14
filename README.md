@@ -5,7 +5,7 @@ A modern React application for managing tasks across different categories. This 
 ## Features
 
 - Create, update, and delete tasks
-- Organize tasks in different lists (Shopping, Work, Home)
+- Organise tasks in different lists (Shopping, Work, Home)
 - Filter tasks by status (To Do, Done)
 - Responsive Material UI design
 - Notifications for operation feedback
@@ -68,17 +68,16 @@ A modern React application for managing tasks across different categories. This 
 
 - Add user authentication using something like JWT auth
 - Replace localStorage with a backend service (Firebase, REST API, GraphQL)
-- Form validation is basic could implement Yup schema for this
+- Form validation is basic could implement Yup schema
 - Can use a form library like Formik
-- Add tests for user workflows
+- Add tests for user workflows using something like Storybook
 - Task Edit functionality
-- Add task categories and tags
 - Implement task priority levels
 - A search facility/ filtering for tasks
 - Paginantion or a show more button for long list of tasks
 - Add drag-and-drop functionality
 - Implement offline support with service workers
-- For more complex state, migrate from Context API to Redux Toolkit, which has better optimization for larger applications and more scalable
+- For more complex state, migrate from Context API to Redux Toolkit, which has better optimisation for larger applications and more scalable
 - Implement React.lazy and Suspense for component-level code splitting. Load page components only when needed
 - Add request caching with libraries like react-query to reduce redundant API calls
 - Implement batching for multiple state updates that happen simultaneously
