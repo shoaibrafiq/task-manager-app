@@ -1,39 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useMemo } from "react";
-import { Task } from "./Tasks";
+import React from 'react';
+import TaskListPage from '../components/TaskListPage';
 
-export const ToDoTasks: React.FC = () => {
-    const [tasks, setTasks] = useState<any>([]);
-  
-    useEffect(() => {
-      const storedTasks = localStorage.getItem('tasks');
-      if (storedTasks) {
-        const parsedTasks = JSON.parse(storedTasks);
-        const filteredTasks = parsedTasks.filter((task: Task) => task.status === "To Do");
-        setTasks(filteredTasks);
-      } else {
-        setTasks([]);
-      }
-    }, []);
-  
-    const taskCount = useMemo(() => {
-      return tasks.length;
-    }, [tasks]);
-  
-    return (
-      <div style={{ backgroundColor: 'olive', padding: '20px', margin: '10px', borderRadius: '5px', width: '300px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)' }}>
-        <div style={{marginBottom: '20px', textAlign: 'center', color: 'white' }}>
-          <h4 style={{ fontWeight: 'bold', fontSize: '1.2em' }}>To Do Tasks</h4>
-          <p style={{ fontSize: '0.9em' }}>Total tasks: {taskCount}</p>
-        </div>
-        <ul style={{ listStyleType: 'none', padding: 0 }}>
-          {tasks.map((task: Task) => (
-            <li key={task.id} style={{ backgroundColor: '#f9f9f9', padding: '10px', borderRadius: '5px', marginBottom: '5px', border: '1px solid #eee' }}>
-              <h2 style={{ fontSize: '1.1em',color: '#555',  fontWeight: 'bold', marginBottom: '5px' }}>{task.title}</h2>
-              <p style={{ fontSize: '0.9em', color: '#555' }}>{task.description}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
+/**
+ * ToDoPage displays all tasks with "To Do" status
+ * Uses the shared TaskListPage component to reduce code duplication
+ */
+const ToDoTasks: React.FC = () => {
+  return (
+    <TaskListPage
+      status="To Do"
+      title="To Do Tasks"
+      subtitle="Total tasks"
+      emptyMessage="No tasks to do."
+      paperColor="#f0f5ff"
+    />
+  );
+};
+
+export default ToDoTasks;

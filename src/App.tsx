@@ -1,34 +1,52 @@
 import React from 'react';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import { DoneTasks } from './DoneTasksPage';
-import TaskList, { Action } from './Tasks';
-import { ToDoTasks } from './ToDoPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ThemeProvider, CssBaseline, Container, Box } from '@mui/material';
+import { theme } from './theme/theme';
+import { TaskProvider } from './contexts/TaskContext';
+import { NotificationProvider } from './contexts/NotificationContext';
+import ErrorBoundary from './components/ErrorBoundary';
+import Header from './components/Header';
+import HomePage from './pages/HomePage';
+import ToDoTasks from './pages/ToDoPage';
+import DoneTasks from './pages/DoneTasksPage';
 
+/**
+ * Main App component that sets up routing and global providers
+ * 
+ * - TaskProvider for state management
+ * - ThemeProvider for consistent styling
+ * - React Router for navigation
+ * - ErrorBoundary for graceful error handling
+ * - NotificationProvider for user feedback
+ */
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <div style={{ textAlign: 'center', padding: '20px' }}>
-        <h4 style={{ fontSize: '36px' }}>My lists</h4>
-          <Action actionType={'link'} href={window.location.href}>Click here to refresh page!</Action>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
-          <Link to="/" style={{ padding: '10px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '5px', textDecoration: 'none', color: '#333' }}>Home</Link>
-          <Link to="/to-do" style={{ padding: '10px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '5px', textDecoration: 'none', color: '#333' }}>To Do</Link>
-          <Link to="/done" style={{ padding: '10px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '5px', textDecoration: 'none', color: '#333' }}>Done</Link>
-        </div>
-          </div>
-
-        <Routes>
-          <Route path="/" element={
-            <div className="App" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '40px' }}>
-              <TaskList taskListName="shopping-list" title="Shopping list" />
-              <TaskList taskListName="work-tasks" title="Work tasks" />
-              <TaskList taskListName="home-tasks" title="Home tasks" />
-            </div>
-          } />
-          <Route path="/to-do" element={<ToDoTasks />} />
-          <Route path="/done" element={<DoneTasks />} />
-        </Routes>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <NotificationProvider>
+        <TaskProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <BrowserRouter>
+              <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <Header />
+                <Container component="main" sx={{ flexGrow: 1, py: 4 }}>
+                  <ErrorBoundary>
+                    <Routes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/to-do" element={<ToDoTasks />} />
+                      <Route path="/done" element={<DoneTasks />} />
+                    </Routes>
+                  </ErrorBoundary>
+                </Container>
+                <Box component="footer" sx={{ py: 3, textAlign: 'center', bgcolor: 'background.paper' }}>
+                  Task Manager App
+                </Box>
+              </Box>
+            </BrowserRouter>
+          </ThemeProvider>
+        </TaskProvider>
+      </NotificationProvider>
+    </ErrorBoundary>
   );
 };
 
